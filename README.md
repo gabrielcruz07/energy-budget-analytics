@@ -20,5 +20,5 @@ End-to-end Data Engineering pipeline designed to extract legacy commercial sprea
 ## 🚀 Current Progress
 - [x] Synthetic legacy data generator implemented (`00_generate_mock_data.ipynb`).
 - [x] Data cleaning, currency/percentage parsing, and schema mapping validated (`01_etl_prototyping.ipynb`).
-- [ ] Cloud PostgreSQL provisioning & automated ingestion (`src/etl/pipeline.py`).
+- [x] Cloud PostgreSQL provisioning & automated ingestion (`src/etl/pipeline.py`).
 - [ ] FastAPI endpoints development (`src/api/main.py`) and cloud deployment.
