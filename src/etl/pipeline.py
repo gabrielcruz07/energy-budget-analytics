@@ -1,27 +1,13 @@
 ﻿import os
-from pathlib import Path
+from src.config import DATABASE_URL, DATA_DIR
 import pandas as pd
 from sqlalchemy import create_engine
-from dotenv import load_dotenv
 
-def get_project_root(marker: str = "README.md") -> Path:
-    current_dir = Path(__file__).resolve().parent
-    for parent in [current_dir] + list(current_dir.parents):
-        if(parent / marker).exists():
-            return parent
-    raise FileNotFoundError(f"Project root marker '{marker}' not found.")
 
-project_root = get_project_root()
-data_dir = project_root / "data"
-
-load_dotenv(project_root / ".env")
 def get_db_engine():
-    db_url = os.getenv("DATABASE_URL")
-    if not db_url:
+    if not DATABASE_URL:
         raise ValueError("DATABASE_URL is not set in the .env file")
-    if not db_url.startswith("postgres://"):
-        db_url.replace("postgres://", "postgresql://", 1)
-    return create_engine(db_url)
+    return create_engine(DATABASE_URL)
 
 def clean_currency(value_str):
     if pd.isna(value_str):
