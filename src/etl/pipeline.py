@@ -1,13 +1,6 @@
-﻿import os
+﻿from sqlalchemy import create_engine
 from src.config import DATABASE_URL, DATA_DIR
 import pandas as pd
-from sqlalchemy import create_engine
-
-
-def get_db_engine():
-    if not DATABASE_URL:
-        raise ValueError("DATABASE_URL is not set in the .env file")
-    return create_engine(DATABASE_URL)
 
 def clean_currency(value_str):
     if pd.isna(value_str):
@@ -25,9 +18,9 @@ def run_etl():
     print("Starting ETL pipeline")
 
     # 1. EXTRACT
-    df_annual = pd.read_csv(data_dir / "metas_anuais.csv")
-    df_monthly = pd.read_csv(data_dir / "metas_mensais.csv")
-    df_sellers = pd.read_csv(data_dir / "metas_vendedores.csv")
+    df_annual = pd.read_csv(DATA_DIR / "metas_anuais.csv")
+    df_monthly = pd.read_csv(DATA_DIR / "metas_mensais.csv")
+    df_sellers = pd.read_csv(DATA_DIR / "metas_vendedores.csv")
     print("Raw CSV files extracted")
 
     # 2. TRANSFORM
@@ -83,7 +76,7 @@ def run_etl():
     print("Data cleaned and schema standardized to English.")
 
     # 3. LOAD
-    engine = get_db_engine()
+    engine = create_engine(DATABASE_URL)
     print("Connected to PostgreSQL")
 
     df_annual.to_sql("annual_targets", engine, if_exists="replace", index=False)
