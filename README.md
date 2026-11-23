@@ -21,4 +21,9 @@ End-to-end Data Engineering pipeline designed to extract legacy commercial sprea
 - [x] Synthetic legacy data generator implemented (`00_generate_mock_data.ipynb`).
 - [x] Data cleaning, currency/percentage parsing, and schema mapping validated (`01_etl_prototyping.ipynb`).
 - [x] Cloud PostgreSQL provisioning & automated ingestion (`src/etl/pipeline.py`).
-- [ ] FastAPI endpoints development (`src/api/main.py`) and cloud deployment.
+- [x] FastAPI endpoints development (`src/api/main.py`) and cloud deployment.
+
+## 🗺️ Roadmap (v2.0 Enhancements)
+- [ ] **Executive Gauge & Composed Charts:** Upgrade Plotly visuals to mirror the original React UI (180° radial completion gauge and dual-axis Area/Bar/Line composed charts).
+- [ ] **Interactive Data Grids:** Pair charts side-by-side with `st.dataframe` progress-bar columns for granular seller and client drill-down.
+- [ ] **Macroeconomic Sparklines:** Integrate external currency/commodity APIs into `st.metric` sparkline cards.
