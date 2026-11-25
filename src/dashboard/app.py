@@ -28,7 +28,7 @@ df_monthly = fetch_endpoint("/targets/monthly")
 df_sellers = fetch_endpoint("/performance/sellers")
 
 if df_annual.empty or df_monthly.empty or df_sellers.empty:
-    st.warning("API unavailable or no data found. Start the backend with `uvicorn src.api.main:app --Start the backend with `uvicorn src.api.main:app --reload`.reload`")
+    st.warning("API unavailable or no data found. Start the backend with `uvicorn src.api.main:app --reload`.")
     st.stop()
 
 st.sidebar.header("Filters")
@@ -71,12 +71,12 @@ st.divider()
 col1,col2 = st.columns(2)
 with col1:
     st.subheader("Predicted vs. Realized by Category (Annual)")
-    st.plotly_chart(build_annual_comparison_chart(filtered_annual), use_container_width=True)
+    st.plotly_chart(build_annual_comparison_chart(filtered_annual), width="stretch")
 with col2:
     st.subheader("Monthly Progression (Predicted vs. Realized)")
-    st.plotly_chart(build_monthly_evolution_chart(filtered_monthly), use_container_width=True)
+    st.plotly_chart(build_monthly_evolution_chart(filtered_monthly), width="stretch")
 
 st.divider()
 
 st.subheader("Sales Team Performance (% Target Achieved)")
-st.plotly_chart(build_seller_ranking_chart(filtered_sellers), use_container_width=True)
+st.plotly_chart(build_seller_ranking_chart(filtered_sellers), width="stretch")

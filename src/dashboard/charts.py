@@ -17,13 +17,13 @@ def build_annual_comparison_chart(df_annual: pd.DataFrame) -> go.Figure:
     fig = px.bar(
         df_melted,
         x="category",
-        y="Value(R$)",
+        y="Value (R$)",
         color="Metric",
         barmode="group",
         text_auto=".2s",
         color_discrete_map={"Predicted": "#636EFA", "Realized": "#00CC96"}
     )
-    fig.update_layout(margin=dict(t=20,b=20,l=0,))
+    fig.update_layout(margin=dict(t=20,b=20,l=0,r=0))
     return fig
 
 def build_monthly_evolution_chart(df_monthly: pd.DataFrame) -> go.Figure:
@@ -33,7 +33,7 @@ def build_monthly_evolution_chart(df_monthly: pd.DataFrame) -> go.Figure:
             ["predicted_month","realized_month"]
         ]
         .sum()
-        .sortvalues("month_number")
+        .sort_values("month_number")
     )
 
     monthly_grouped["month_label"] = monthly_grouped["month_number"].apply(
@@ -46,7 +46,7 @@ def build_monthly_evolution_chart(df_monthly: pd.DataFrame) -> go.Figure:
     fig = px.line(
         monthly_grouped,
         x="month_label",
-        y="Predicted,Realized",
+        y=["Predicted", "Realized"],
         markers=True,
         labels={"value": "Value (R$)","month_label":"Month","variable":"Metric"},
         color_discrete_map={"Predicted": "#636EFA", "Realized": "#00CC96"}

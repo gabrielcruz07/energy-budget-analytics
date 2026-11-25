@@ -1,4 +1,5 @@
-﻿import os
+import os
+import sys
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -18,5 +19,17 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-API_URL = os.getenv("API_URL","http://127.0.0.1:8000")
+
+def _get_api_url() -> str:
+    url = os.getenv("API_URL")
+    if not url and "streamlit" in sys.modules:
+        try:
+            import streamlit as st
+            url = st.secrets.get("API_URL")
+        except Exception:
+            url = None
+    return (url or "http://127.0.0.1:8000").rstrip("/")
+
+
+API_URL = _get_api_url()
 

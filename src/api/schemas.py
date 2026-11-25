@@ -1,4 +1,3 @@
-from dns import serial
 from pydantic import BaseModel, ConfigDict
 
 class AnnualTargetResponse(BaseModel):
@@ -16,6 +15,7 @@ class MonthlyTargetResponse(BaseModel):
     source_id: int
     category: str
     month_name: str
+    month_number: int
     predicted_month: float
     realized_month: float
     completion_percentage: float
@@ -28,4 +28,3 @@ class SellerPerformanceResponse(BaseModel):
     month_name: str
     month_number: int
     completion_percentage: float
-

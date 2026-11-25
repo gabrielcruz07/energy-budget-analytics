@@ -22,7 +22,7 @@ def health_check():
         "docs_url":"/docs"
     }
 
-@app.get("/targets/annual",response_model=AnnualTargetResponse,tags=["annual"])
+@app.get("/targets/annual",response_model=List[AnnualTargetResponse],tags=["annual"])
 def get_annual_targets(
     category: Optional[str] = Query(None, description="Filter by category name")
 ):
@@ -31,7 +31,7 @@ def get_annual_targets(
         raise HTTPException(status_code=404, detail="No annual targets found")
     return result
 
-@app.get("/targets/monthly",response_model=MonthlyTargetResponse,tags=["monthly"])
+@app.get("/targets/monthly",response_model=List[MonthlyTargetResponse],tags=["monthly"])
 def get_monthly_targets(
         category: Optional[str] = Query(None, description="Filter by category name"),
         month_number: Optional[int] = Query(None, ge=1, le=12, description="Filter by month number")
@@ -41,10 +41,10 @@ def get_monthly_targets(
         raise HTTPException(status_code=404, detail="No monthly targets found")
     return result
 
-@app.get("/performance/sellers",response_model=SellerPerformanceResponse,tags=["sellers"])
+@app.get("/performance/sellers",response_model=List[SellerPerformanceResponse],tags=["sellers"])
 def get_seller_performance(
         seller_name: Optional[str] = Query(None, description="Filter by seller name"),
-        month_number: Optional[int] = Query(None, description="Filter by month number")
+        month_number: Optional[int] = Query(None, ge=1, le=12, description="Filter by month number")
 ):
     result = service.fetch_seller_performance(seller_name=seller_name, month_number=month_number)
     if not result:
